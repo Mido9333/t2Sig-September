@@ -6,21 +6,24 @@
 package model;
 
 import java.util.ArrayList;
+import model.InvoiceHeader;
 
 /**
  *
  * @author ahmed
  */
-public class Line {
+public class InvoiceLine {
     
-    private String name;
+    private String Itemname;
     private int count;
     private double price;
-    private Header inv;
-    private ArrayList <Header> Header;
+    private InvoiceHeader inv;
+    
+     public InvoiceLine() {
+    }
 
-    public Line(String name, int count, double price, Header inv) {
-        this.name = name;
+    public InvoiceLine(String Itemname, int count, double price, InvoiceHeader inv) {
+        this.Itemname = Itemname;
         this.count = count;
         this.price = price;
         this.inv = inv;
@@ -30,23 +33,21 @@ public class Line {
     return count*price;
     }
 
-    public Header getInv() {
+    public InvoiceHeader getInv() {
         return inv;
     }
 
-    public ArrayList<Header> getHeader() {
-        return Header;
-    }
-    public void setInv(Header inv) {
+  
+    public void setInv(InvoiceHeader inv) {
         this.inv = inv;
     }
 
     public String getName() {
-        return name;
+        return Itemname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String Itemname) {
+        this.Itemname = Itemname;
     }
 
     public int getCount() {
@@ -67,7 +68,7 @@ public class Line {
 
     @Override
     public String toString() {
-        return "Line{" + "name=" + name + ", count=" + count + ", price=" + price + '}';
+        return "Line{" + "name=" + Itemname + ", count=" + count + ", price=" + price + '}';
     }
     
     

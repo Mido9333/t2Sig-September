@@ -6,16 +6,21 @@
 package view;
 
 import controller.Controller;
+import java.awt.event.ActionListener;
+import controller.SelectionListener;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import model.Header;
+import javax.swing.event.ListSelectionListener;
+import model.InvoiceHeader;
 import model.HeaderTableModel;
-import model.Line;
+import model.InvoiceLine;
 import model.LineTableModel;
 import view.LineTableDialog;
 
@@ -24,6 +29,8 @@ import view.LineTableDialog;
  * @author ahmed
  */
 public class invoiceframe extends javax.swing.JFrame {
+
+  
 
    
 
@@ -61,26 +68,35 @@ public class invoiceframe extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         lineTable = new javax.swing.JTable();
         createinvbtn = new javax.swing.JButton();
+        createinvbtn.addActionListener(controller);
         deleteinvbtn = new javax.swing.JButton();
+        deleteinvbtn.addActionListener(controller);
         createitembtn = new javax.swing.JButton();
+        createitembtn.addActionListener(controller);
         deleteitembtn = new javax.swing.JButton();
+        deleteitembtn.addActionListener(controller);
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         loadmenuitem = new javax.swing.JMenuItem();
+        loadmenuitem.addActionListener(controller);
         savemenuitem = new javax.swing.JMenuItem();
+        savemenuitem.addActionListener(controller);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         headerTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "title1", "title2", "title3", "title4"
+                "title1", "title2", "title3", "title3"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, true
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -107,14 +123,16 @@ public class invoiceframe extends javax.swing.JFrame {
 
         lineTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "title1", "title2", "title3", "title4"
+                "title1", "title2", "title3", "title3"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                true, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -183,7 +201,7 @@ public class invoiceframe extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(invnumlbl))
@@ -201,15 +219,15 @@ public class invoiceframe extends javax.swing.JFrame {
                             .addComponent(invtotallbl))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(createinvbtn)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(deleteinvbtn)
                         .addComponent(deleteitembtn)
                         .addComponent(createitembtn)))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         jLabel1.getAccessibleContext().setAccessibleDescription("");
@@ -217,9 +235,158 @@ public class invoiceframe extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-
+    /* private void initComponents(){
     
+    jScrollPane1 = new javax.swing.JScrollPane();
+    headerTable = new javax.swing.JTable();
+    createinvbtn = new javax.swing.JButton();
+    deleteinvbtn = new javax.swing.JButton();
+    jLabel1 = new javax.swing.JLabel();
+    jLabel2 = new javax.swing.JLabel();
+    jLabel3 = new javax.swing.JLabel();
+    jLabel4 = new javax.swing.JLabel();
+    invcustlbl = new javax.swing.JLabel();
+    invdatelbl = new javax.swing.JLabel();
+    invnumlbl = new javax.swing.JLabel();
+    invtotallbl = new javax.swing.JLabel();
+    jScrollPane2 = new javax.swing.JScrollPane();
+    lineTable = new javax.swing.JTable();
+    createitembtn = new javax.swing.JButton();
+    deleteitembtn = new javax.swing.JButton();
+    jMenuBar1 = new javax.swing.JMenuBar();
+    jMenu1 = new javax.swing.JMenu();
+    loadmenuitem = new javax.swing.JMenuItem();
+    savemenuitem = new javax.swing.JMenuItem();
     
+    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    
+    headerTable.setModel(new javax.swing.table.DefaultTableModel(
+    new Object [][] {
+    
+    },
+    new String [] {
+    
+    }
+    ));
+    headerTable.getSelectionModel().addListSelectionListener((ListSelectionListener) SelectionListener);
+    jScrollPane1.setViewportView(headerTable);
+    createinvbtn.setText("Create New Invoice");
+    createinvbtn.addActionListener(controller);
+    
+    deleteinvbtn.setText("Delete Invoice");
+    deleteinvbtn.addActionListener(controller);
+    
+    jLabel1.setText("invoice num");
+    
+    jLabel2.setText("invoice date");
+    
+    jLabel3.setText("Customer name");
+    
+    jLabel4.setText("invoice total");
+    
+    lineTable.setModel(new javax.swing.table.DefaultTableModel(
+    new Object [][] {
+    
+    },
+    new String [] {
+    
+    }
+    ));
+    jScrollPane2.setViewportView(lineTable);
+    
+    createitembtn.setText("create new items");
+    createitembtn.addActionListener(controller);
+    
+    deleteitembtn.setText("delete item");
+    deleteitembtn.addActionListener(controller);
+    
+    jMenu1.setText("File");
+    
+    loadmenuitem.setText("Load File");
+    loadmenuitem.addActionListener(controller);
+    jMenu1.add(loadmenuitem);
+    
+    savemenuitem.setText("Save File");
+    savemenuitem.addActionListener(controller);
+    jMenu1.add(savemenuitem);
+    
+    jMenuBar1.add(jMenu1);
+    
+    setJMenuBar(jMenuBar1);
+    
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(layout.createSequentialGroup()
+    .addContainerGap()
+    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+    .addGap(31, 31, 31)
+    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(layout.createSequentialGroup()
+    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addComponent(jLabel3)
+    .addComponent(jLabel2)
+    .addComponent(jLabel1)
+    .addComponent(jLabel4))
+    .addGap(18, 18, 18)
+    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addComponent(invtotallbl)
+    .addComponent(invnumlbl)
+    .addComponent(invdatelbl)
+    .addComponent(invcustlbl)))
+    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+    .addContainerGap(31, Short.MAX_VALUE))
+    .addGroup(layout.createSequentialGroup()
+    .addGap(64, 64, 64)
+    .addComponent(createinvbtn)
+    .addGap(67, 67, 67)
+    .addComponent(deleteinvbtn)
+    .addGap(136, 136, 136)
+    .addComponent(createitembtn)
+    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+    .addComponent(deleteitembtn)
+    .addGap(100, 100, 100))
+    );
+    layout.setVerticalGroup(
+    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(layout.createSequentialGroup()
+    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(layout.createSequentialGroup()
+    .addContainerGap()
+    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE))
+    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+    .addGap(26, 26, 26)
+    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+    .addComponent(jLabel1)
+    .addComponent(invnumlbl))
+    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+    .addComponent(jLabel2)
+    .addComponent(invdatelbl))
+    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+    .addComponent(jLabel3)
+    .addComponent(invcustlbl))
+    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+    .addComponent(jLabel4)
+    .addComponent(invtotallbl))
+    .addGap(26, 26, 26)
+    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)))
+    .addGap(39, 39, 39)
+    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+    .addComponent(createinvbtn)
+    .addComponent(deleteinvbtn)
+    .addComponent(createitembtn)
+    .addComponent(deleteitembtn))
+    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+    
+    pack();
+    
+    }*/
+     
     /**
      * @param args the command line arguments
      */
@@ -250,11 +417,13 @@ public class invoiceframe extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                new invoiceframe().setVisible(true);
                 invoiceframe frame= new invoiceframe();
+                //frame.controller.LoadFile("InvoiceHeader.csv", "InvoiceLine.csv");
                 frame.setVisible(true);
-                 //new HeaderTableDialog().setVisible(true);
+           //     new HeaderTableDialog().setVisible(true);
                
-                frame.controller.LoadFile("header.csv","line.csv");
+                //rame.controller.LoadFile("InvoiceHeader.csv","InvoiceLine.csv");
             }
         });
     }
@@ -281,42 +450,44 @@ public class invoiceframe extends javax.swing.JFrame {
     private javax.swing.JMenuItem loadmenuitem;
     private javax.swing.JMenuItem savemenuitem;
     // End of variables declaration//GEN-END:variables
-
+    
+    private Controller controller=new Controller(this);
+     private ArrayList<InvoiceHeader> Header;
+    private ArrayList <InvoiceLine> Line;
+    private HeaderTableModel HeaderTableModel;
+    private LineTableModel LineTableModel;
+    public static SimpleDateFormat Df = new SimpleDateFormat("dd-MM-yyyy");
+    private SelectionListener SelectionListener = new SelectionListener();
+    /*
     private Controller controller=new Controller(this);
     public static SimpleDateFormat Df=new SimpleDateFormat("dd-mm-yyyy") ;
-    ArrayList<Header> Header;
-    ArrayList <Line> Line;
+    ArrayList<InvoiceHeader> Header;
+    ArrayList <InvoiceLine> Line;
     HeaderTableModel HeaderTableModel;
     LineTableModel LineTableModel;
-    LineTableDialog LineTableDialog;
+    LineTableDialog LineTableDialog;*/
+    
+    
 
-    public LineTableModel getLineTableModel() {
-        return LineTableModel;
-    }
-
-    public void setLineTableModel(LineTableModel LineTableModel) {
-        this.LineTableModel = LineTableModel;
-    }
-
-    public ArrayList<Line> getLine(){
+    public ArrayList<InvoiceLine> getLine(){
     if(Line==null){
         Line=new ArrayList<>();
     }
     return Line;
     }
-    public void setLine(ArrayList<Line> Line){
+    public void setLine(ArrayList<InvoiceLine> Line){
     
         this.Line=Line;
     }
     
-    public ArrayList<Header> getHeader(){
+    public ArrayList<InvoiceHeader> getHeader(){
     if(Header==null){
         Header=new ArrayList<>();
     }
     return Header;
     }
     
-    public void setHeader(ArrayList<Header> Header){
+    public void setHeader(ArrayList<InvoiceHeader> Header){
     
         this.Header=Header;
     }
@@ -328,6 +499,7 @@ public class invoiceframe extends javax.swing.JFrame {
 
     public void setHeaderTableModel(HeaderTableModel HeaderTableModel) {
         this.HeaderTableModel = HeaderTableModel;
+        headerTable.setModel(HeaderTableModel);
     }
 
     public JTable getheaderTable(){
@@ -357,10 +529,25 @@ public class invoiceframe extends javax.swing.JFrame {
     public JLabel getInvTotalLabel(){
     return invtotallbl;
     }
-
-    public Object getLineTableDialog() {
-       return LineTableDialog;
+    public InvoiceHeader getInvoiceNum(int num){
+        for(InvoiceHeader inv: Header){
+        if(num==inv.getnum()){
+        return inv;
+        }
+        }
+        return null;
     }
+
+    
+    /*public ActionListener getActionListener() {
+    return controller;
+    
+    
+    }
+    */    
+    
+
+    
 
   
 

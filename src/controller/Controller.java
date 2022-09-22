@@ -15,6 +15,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,12 +24,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import model.Header;
+import model.InvoiceHeader;
 import model.HeaderTableModel;
-import model.Line;
+import model.InvoiceLine;
 import model.LineTableModel;
 import view.HeaderTableDialog;
-import static view.HeaderTableDialog.jTextfielddt;
+
 import view.LineTableDialog;
 import view.invoiceframe;
 
@@ -38,22 +39,17 @@ import view.invoiceframe;
  */
 public class Controller implements ActionListener {
 
-    private static Object headerTable;
+   
  private   invoiceframe frame;
  private HeaderTableDialog HeaderDialog;
  private LineTableDialog LineDialog;
-    private int num;
+ 
    
 
     public Controller(invoiceframe frame) {
         this.frame = frame;
     }
-
-    private Controller() {
-        
-    }
     
-
     @Override
     public void actionPerformed(ActionEvent e) {
         switch(e.getActionCommand()){
@@ -61,19 +57,27 @@ public class Controller implements ActionListener {
                 createNewInvoice();
                 break;
                 
-                /*case "new Invoice ok":
-                Ok();
-                break;*/        
+                case "newInvoiceOK":
+                 newInvoiceOk();
+                break;      
+                case "newInvoiceCancel":
+                 newInvoiceCancel();
             case "delete invoice":
                 deleteInvoice();
                 break;
             
-            case "create new item":
+            case "create new items":
                 createNewItem();
                 break;
             case "delete item":
                 deleteItem();
                 break;
+                case "newLineOK":
+                 newItemOk();
+                 break;
+                 case "newLineCancel":
+                 newItemCancel();
+                 break;
             case "Load":
                 LoadFile(null,null);
                 break;
@@ -89,11 +93,8 @@ public class Controller implements ActionListener {
     //dialog for header table
     private void createNewInvoice() {
 
-        HeaderTableDialog Dialog=new HeaderTableDialog();
-        //setLayout(new FlowLayout());
-        Dialog.setVisible(true);
-        Dialog.pack();
-        Dialog.setDefaultCloseOperation(Dialog.DISPOSE_ON_CLOSE);
+       HeaderDialog = new HeaderTableDialog(frame);
+        HeaderDialog.setVisible(true);
         }
    
     /*public  void AddRowToJTable(String[] dataRow) {
@@ -108,39 +109,119 @@ public class Controller implements ActionListener {
     
     
     private void deleteInvoice(){
-       HeaderTableModel model=(HeaderTableModel) frame.getheaderTable().getModel();
-       try{
-       int SelecteRowIndex=frame.getheaderTable().getSelectedRow();
-       model.removeRow(SelecteRowIndex);
-       }catch(Exception ex){
-       JOptionPane.showMessageDialog(null, ex);
-       }
-        
+      int selectedRowIndex = frame.getheaderTable().getSelectedRow();
+        if (selectedRowIndex != -1) {
+            frame.getHeader().remove(selectedRowIndex);
+            frame.getHeaderTableModel().fireTableDataChanged();
+            frame.getLineTable().setModel(new LineTableModel(null));
+            frame.setLine(null);
+            frame.getInvCustLabel().setText("");
+            frame.getInvNumLabel().setText("");
+            frame.getInvTotalLabel().setText("");
+            frame.getInvDateLabel().setText("");
+        }
     }
 
     
    
 
     private void createNewItem() {
-    LineTableDialog Dialog2=new LineTableDialog();
-        Dialog2.setVisible(true);
-        Dialog2.pack();
-        Dialog2.setDefaultCloseOperation(Dialog2.DISPOSE_ON_CLOSE);
-        
+   LineDialog = new LineTableDialog(frame);
+        LineDialog.setVisible(true);
     }
     
+    private void newItemCancel() {
+        LineDialog.setVisible(false);
+        LineDialog = null;
+        LineDialog.dispose();
+        
+        
+    }
+
+    private void newItemOk() {
+        LineDialog.setVisible(false);
+
+        String name = LineDialog.getItemName().getText();
+        String quantity = LineDialog.getItemCount().getText();
+        String Price = LineDialog.getItemPrice().getText();
+        int count = 1;
+        double price = 1;
+        try {
+            count = Integer.parseInt(quantity);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+
+        }
+
+        try {
+            price = Double.parseDouble(Price);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            
+
+        }
+        int InvoiceHeaderSelection = frame.getheaderTable().getSelectedRow();
+        if (InvoiceHeaderSelection != -1) {
+            InvoiceHeader invHeader = frame.getHeader().get(InvoiceHeaderSelection);
+            InvoiceLine Line = new InvoiceLine(name, (int) price, count, invHeader);
+            //invHeader.getLines().add(line);
+            frame.getLine().add(Line);
+            LineTableModel lineTableModel = (LineTableModel) frame.getLineTable().getModel();
+            lineTableModel.fireTableDataChanged();
+            frame.getHeaderTableModel().fireTableDataChanged();
+        }
+        frame.getheaderTable().setRowSelectionInterval(InvoiceHeaderSelection, InvoiceHeaderSelection);
+        LineDialog = null;
+        LineDialog.dispose();
+        
+    }
+
+    //ok button for invoice table
+    
+      private void newInvoiceOk() {
+        HeaderDialog.setVisible(false);
+
+        String customerName = HeaderDialog.getCustNameField().getText();
+        String Date = HeaderDialog.getInvDateField().getText();
+        Date date = new Date();
+        try {
+            date = frame.Df.parse(Date);
+        } catch (ParseException e) {JOptionPane.showMessageDialog(frame, "date cannot be parsed", "Invalid date format", JOptionPane.ERROR);}
+
+        int invoicenum = 0;
+        for (InvoiceHeader invoice : frame.getHeader()){
+         if (invoice.getnum() > invoicenum) {
+                invoicenum = invoice.getnum();
+            }}invoicenum++;
+        InvoiceHeader NewInvoice = new InvoiceHeader(invoicenum, customerName, date);
+        frame.getHeader().add(NewInvoice);
+        frame.getHeaderTableModel().fireTableDataChanged();
+        HeaderDialog.dispose();
+        HeaderDialog = null;
+    }
+      
+    private void newInvoiceCancel() {
+        HeaderDialog.setVisible(false);
+        HeaderDialog.dispose();
+        HeaderDialog=null;
+    }
+
+  
     
 
     
-
+//delete buttone for deleting a product item
     private void deleteItem() {
-   LineTableModel model=(LineTableModel) frame.getLineTable().getModel();
-       try{
-       int SelecteRowIndex=frame.getLineTable().getSelectedRow();
-       model.removeRow(SelecteRowIndex);
-       }catch(Exception ex){
-       JOptionPane.showMessageDialog(null, ex);
-       }
+   int selectedLineIndex = frame.getLineTable().getSelectedRow();
+        int selectedInvoiceIndex = frame.getheaderTable().getSelectedRow();
+        if (selectedLineIndex != -1) {
+            frame.getLine().remove(selectedLineIndex);
+            LineTableModel lineTableModel = (LineTableModel) frame.getLineTable().getModel();
+            lineTableModel.fireTableDataChanged();
+            frame.getInvTotalLabel().setText("" + frame.getHeader().get(selectedInvoiceIndex).getTotal());
+            frame.getHeaderTableModel().fireTableDataChanged();
+            frame.getheaderTable().setRowSelectionInterval(selectedInvoiceIndex, selectedInvoiceIndex);
+        }
     }
  
     public void LoadFile(String HeaderPath,String LinePath) {
@@ -232,7 +313,7 @@ public class Controller implements ActionListener {
              String name=datarow[2];
              int num=Integer.parseInt(numString);
              Date date=frame.Df.parse(dateString);
-             Header inv= new Header (num,name,date);
+             InvoiceHeader inv= new InvoiceHeader (num,name,date);
              frame.getHeader().add(inv);
              
              
@@ -244,8 +325,8 @@ public class Controller implements ActionListener {
             String name=datarow[1];
             double price=Double.parseDouble(datarow[2]);
             int count=Integer.parseInt(datarow[3]);
-            Header inv= getInvoiceNum(num);
-             Line lines= new Line(name, (int) price,count ,inv);
+            InvoiceHeader inv= frame.getInvoiceNum(num);
+             InvoiceLine lines= new InvoiceLine(name, (int) price,count ,inv);
              inv.getLine().add(lines);
             }
             
@@ -257,14 +338,7 @@ public class Controller implements ActionListener {
      }
     }
     
-    private Header getInvoiceNum(int num){
-        for(Header inv: frame.getHeader()){
-        if(num==inv.getnum()){
-        return inv;
-        }
-        }
-        return null;
-    }
+    
         
     
 
@@ -295,17 +369,17 @@ public class Controller implements ActionListener {
                     
                 }
                //for loop for line
-               for(int i=0;i< frame.getLineTableModel().getColumnCount();i++){
-                Headerfw.write(frame.getLineTableModel().getColumnName(i)+",");
+               for(int i=0;i< frame.getLineTable().getColumnCount();i++){
+                Headerfw.write(frame.getLineTable().getColumnName(i)+",");
                 }
                 LineFw.write("\n");
-                for (int i = 0; i < frame.getLineTableModel().getRowCount(); i++) {
-                    for (int j = 0; j < frame.getLineTableModel().getColumnCount(); j++) {
-                        LineFw.write(frame.getLineTableModel().getValueAt(i, j).toString()+",");
+                for (int i = 0; i < frame.getLineTable().getRowCount(); i++) {
+                    for (int j = 0; j < frame.getLineTable().getColumnCount(); j++) {
+                        LineFw.write(frame.getLineTable().getValueAt(i, j).toString()+",");
                     }
                     LineFw.write("\n");//record per line
                     
-                    //showMessageDialog( "Successfully saved", "Data", JOptionPane.INFORMATION_MESSAGE);
+                   // JOptionPane.showMessageDialog( "Successfully saved", "Data", JOptionPane.INFORMATION_MESSAGE);
                 }
                 Headerbw.close();
                 Headerfw.close();
@@ -350,15 +424,18 @@ public class Controller implements ActionListener {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new invoiceframe().setVisible(true);
-                //HeaderTableDialog dialog = new HeaderTableDialog(new javax.swing.JFrame(), true);
-                new HeaderTableDialog().setVisible(true);
+                //HeaderTableDialog dialog = new HeaderTableDialog();
+                //new HeaderTableDialog().setVisible(true);
                
-                new LineTableDialog().setVisible(true);
+                //new LineTableDialog().setVisible(true);
                 //new Controller().setVisible(true);
                 
             }
         });
     }
+
+    
+
 
    
 

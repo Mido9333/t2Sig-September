@@ -9,29 +9,27 @@ import java.awt.List;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
+import view.invoiceframe;
 
 /**
  *
  * @author ahmed
  */
-public class HeaderTableModel extends DefaultTableModel {
+public class HeaderTableModel extends AbstractTableModel {
 
    
   
     
  
     private String [] Columns={"invoice no","date","Customername","total"};
-   private ArrayList<Header> Header;
+   private ArrayList<InvoiceHeader> Header;
    
-   public HeaderTableModel(ArrayList<Header> Header){
+   public HeaderTableModel(ArrayList<InvoiceHeader> Header){
    
        this.Header =Header;
    }
 
     
-public ArrayList<Header> getHeader() {
-        return Header;
-    }
     @Override
     public int getRowCount() {
         
@@ -52,38 +50,29 @@ public ArrayList<Header> getHeader() {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+        InvoiceHeader Inv = Header.get(rowIndex);
         switch (columnIndex){
              case 0:
-             Header.get(rowIndex).getnum();
-             break;
+             return Header.get(rowIndex).getnum();
+             
              case 1:
                  
-             Header.get(rowIndex).getDate();
-             break;
+             
+          return   invoiceframe.Df.format(Header.get(rowIndex).getDate());
+             
              case 2:
-             Header.get(rowIndex).getCustomername();
-             break;
+             return Header.get(rowIndex).getCustomername();
+             
              case 3:
-             Header.get(rowIndex).getTotal();
-             break;
+             return Header.get(rowIndex).getTotal();
+             
              default :
                  break ;
          }
-       return null;
-    }
-    @Override
-    public Class<?> getColumnClass(int columnIndex){
-    
-        if (getValueAt(0,columnIndex)!=null){
-            return getValueAt(0,columnIndex).getClass();
-        }else{
-            return Object.class;
-        }
+       return "";
     }
 
-    public void setModel(HeaderTableModel headerTableModel) {
-        
-    }
+
 
        
 

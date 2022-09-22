@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -12,34 +14,43 @@ import java.util.Date;
  *
  * @author ahmed
  */
-public class Header {
+public class InvoiceHeader {
     private int num;
-    private Date date;
+    private  Date date;
     private String customername;
-    private ArrayList <Line> Line; //to make the super class knowing the subclass
+    private ArrayList <InvoiceLine> Line; //to make the super class knowing the subclass
+private DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-    public Header(int num, Date date, String customername) {
+ public InvoiceHeader(int num, String name, Date date) {
+       
+    }
+    public InvoiceHeader(int num, Date date, String customername) {
         this.num = num;
         this.date = date;
         this.customername = customername;
     }
 
-    public Header(int num, String name, Date date) {
-       
-    }
+   
 
     public double getTotal(){
     double total=0.0;
-            for(Line line:Line){
-            total+=line.getTotal();
-            }
+    for(int i=0 ; i<getLine().size();i++){
+    InvoiceLine Line=getLine().get(i);
+     total+=Line.getTotal();
+    }
+    /* for(InvoiceLine line:Line){
+    total+=line.getTotal();
+    }*/
     return total;        
     }
-    public ArrayList<Line> getLine() {
+    public ArrayList<InvoiceLine> getLine() {
+        if (Line == null) {
+            Line = new ArrayList<>();
+        }
         return Line;
     }
 
-    public ArrayList<Line> setLine() {
+    public ArrayList<InvoiceLine> setLine() {
         this.Line= Line;
         return Line;
     }
@@ -67,6 +78,10 @@ public class Header {
     public void setDate(Date date) {
         this.date = date;
     }
+    public void addInvLine(InvoiceLine Line){
+    getLine().add(Line);
+    }
+    
 
     @Override
     public String toString() {
