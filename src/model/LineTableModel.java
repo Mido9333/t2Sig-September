@@ -3,60 +3,54 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package Model;
 
-import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author ahmed
+ * @author DELL
  */
 public class LineTableModel extends AbstractTableModel {
-   private String [] Columns={"item name","price","Count","total"};
-   private ArrayList<InvoiceLine> Line;
-   
-   public LineTableModel(ArrayList<InvoiceLine> Line){
-   
-       this.Line =Line;
-   }  
-   
+
+    private String[] columns = {"Item", "Price", "Count", "Total"};
+    private List<InvoiceLine> Line;
+
+    public LineTableModel(List<InvoiceLine> Line) {
+        this.Line = Line;
+    }
+
+    public List<InvoiceLine> getLine() {
+        return Line;
+    }
+    
     @Override
     public int getRowCount() {
-   return Line == null ? 0 : Line.size();
+        return Line.size();
     }
 
     @Override
     public int getColumnCount() {
-         return Columns.length;
-    }
-   @Override
-    public String getColumnName(int column){
-    
-        return Columns[column];
+        return columns.length;
     }
 
     @Override
+    public String getColumnName(int column) {
+        return columns[column];
+    }
+    
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-          
-              switch (columnIndex){
-             case 0:
-             return Line.get(rowIndex).getName();
-             
-             case 1:
-                 
-             return Line.get(rowIndex).getPrice();
-             
-             case 2:
-             return Line.get(rowIndex).getCount();
-             
-             case 3:
-             return Line.get(rowIndex).getTotal();
-             
-             default :
-                 break ;
-         }
-       return "";
-      }
+        InvoiceLine line = Line.get(rowIndex);
+        
+        switch (columnIndex) {
+            case 0: return line.getItem();
+            case 1: return line.getPrice();
+            case 2: return line.getCount();
+            case 3: return line.getTotal();
+        }
+        return "";
+    }
+    
 }

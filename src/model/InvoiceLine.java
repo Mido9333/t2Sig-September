@@ -3,59 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
-
-import java.util.ArrayList;
-import model.InvoiceHeader;
+package Model;
 
 /**
  *
- * @author ahmed
+ * @author DELL
  */
 public class InvoiceLine {
-    
-    private String Itemname;
-    private int count;
+    private String item;
     private double price;
-    private InvoiceHeader inv;
-    
-     public InvoiceLine() {
-    }
+    private int count;
+    private InvoiceHeader Inv;
 
-    public InvoiceLine(String Itemname, int count, double price, InvoiceHeader inv) {
-        this.Itemname = Itemname;
-        this.count = count;
+    public InvoiceLine(String item, double price, int count, InvoiceHeader Inv) {
+        this.item = item;
         this.price = price;
-        this.inv = inv;
+        this.count = count;
+        this.Inv = Inv;
+    }
+
+    public String toCSV() {
+        return Inv.getnum() + "," + item + "," + price + "," + count;
     }
     
-    public double getTotal(){
-    return count*price;
+    public String getItem() {
+        return item;
     }
 
-    public InvoiceHeader getInv() {
-        return inv;
-    }
-
-  
-    public void setInv(InvoiceHeader inv) {
-        this.inv = inv;
-    }
-
-    public String getName() {
-        return Itemname;
-    }
-
-    public void setName(String Itemname) {
-        this.Itemname = Itemname;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
+    public void setItem(String item) {
+        this.item = item;
     }
 
     public double getPrice() {
@@ -66,10 +42,29 @@ public class InvoiceLine {
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return "Line{" + "name=" + Itemname + ", count=" + count + ", price=" + price + '}';
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public InvoiceHeader getInv() {
+        return Inv;
+    }
+
+    public void setInvoice(InvoiceHeader Header) {
+        this.Inv = Header;
     }
     
+    public double getTotal() {
+        return count * price;
+    }
+
+    @Override
+    public String toString() {
+        return "Line{" + "item=" + item + ", price=" + price + ", count=" + count + '}';
+    }
     
 }

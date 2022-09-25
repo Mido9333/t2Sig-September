@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package View;
 
 import java.awt.GridLayout;
 import javax.swing.JButton;
@@ -13,27 +13,27 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author ahmed
+ * @author DELL
  */
 public class LineTableDialog extends JDialog{
-     private JTextField ItemNameField;
-    private JTextField itemQuantitytField;
+    private JTextField itemNameField;
+    private JTextField itemCountField;
     private JTextField itemPriceField;
-    private JLabel NameLbl;
-    private JLabel QuantityLbl;
-    private JLabel PriceLbl;
+    private JLabel itemNameLbl;
+    private JLabel itemCountLbl;
+    private JLabel itemPriceLbl;
     private JButton okBtn;
     private JButton cancelBtn;
     
     public LineTableDialog(invoiceframe frame) {
-        ItemNameField = new JTextField(30);
-        NameLbl = new JLabel("Product Name");
+        itemNameField = new JTextField(20);
+        itemNameLbl = new JLabel("Item Name");
         
-        itemQuantitytField = new JTextField(30);
-        QuantityLbl = new JLabel("Product Quantity");
+        itemCountField = new JTextField(20);
+        itemCountLbl = new JLabel("Item Count");
         
-        itemPriceField = new JTextField(30);
-        PriceLbl = new JLabel("Product Price");
+        itemPriceField = new JTextField(20);
+        itemPriceLbl = new JLabel("Item Price");
         
         okBtn = new JButton("OK");
         cancelBtn = new JButton("Cancel");
@@ -43,29 +43,29 @@ public class LineTableDialog extends JDialog{
         
         okBtn.addActionListener(frame.getController());
         cancelBtn.addActionListener(frame.getController());
-        setLayout(new GridLayout(4, 3));
+        setLayout(new GridLayout(4, 2));
         
-        add (NameLbl);
-        add (ItemNameField);
-        add(QuantityLbl);
-        add(itemQuantitytField);
-        add(PriceLbl);
+        add(itemNameLbl);
+        add(itemNameField);
+        add(itemCountLbl);
+        add(itemCountField);
+        add(itemPriceLbl);
         add(itemPriceField);
         add(okBtn);
         add(cancelBtn);
-        
+        setModal(true);
         pack();
     }
 
-    public JTextField getItemName() {
-        return ItemNameField;
+    public JTextField getItemNameField() {
+        return itemNameField;
     }
 
-    public JTextField getItemCount() {
-        return itemQuantitytField;
+    public JTextField getItemCountField() {
+        return itemCountField;
     }
 
-    public JTextField getItemPrice() {
+    public JTextField getItemPriceField() {
         return itemPriceField;
     }
 }

@@ -3,80 +3,51 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package Model;
 
-import java.awt.List;
-import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
-import view.invoiceframe;
+import View.invoiceframe;
 
 /**
  *
- * @author ahmed
+ * @author DELL
  */
 public class HeaderTableModel extends AbstractTableModel {
-
-   
-  
+    private String[] columns = {"Num", "Customername", 
+        "Date", "Total"};
+    private List<InvoiceHeader> Header;
     
- 
-    private String [] Columns={"invoice no","date","Customername","total"};
-   private ArrayList<InvoiceHeader> Header;
-   
-   public HeaderTableModel(ArrayList<InvoiceHeader> Header){
-   
-       this.Header =Header;
-   }
-
+    public HeaderTableModel(List<InvoiceHeader> Header) {
+        this.Header = Header;
+    }
     
     @Override
     public int getRowCount() {
-        
         return Header.size();
-    
     }
 
     @Override
     public int getColumnCount() {
-         return Columns.length;
-    }
-    @Override
-    public String getColumnName(int column){
-    
-        return Columns[column];
+        return columns.length;
     }
 
+    @Override
+    public String getColumnName(int columnIndex) {
+        return columns[columnIndex];
+    }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        InvoiceHeader Inv = Header.get(rowIndex);
-        switch (columnIndex){
-             case 0:
-             return Header.get(rowIndex).getnum();
-             
-             case 1:
-                 
-             
-          return   invoiceframe.Df.format(Header.get(rowIndex).getDate());
-             
-             case 2:
-             return Header.get(rowIndex).getCustomername();
-             
-             case 3:
-             return Header.get(rowIndex).getTotal();
-             
-             default :
-                 break ;
-         }
-       return "";
+        InvoiceHeader inv = Header.get(rowIndex);
+        switch (columnIndex) {
+            case 0: return inv.getnum();
+            case 1: return inv.getCustomername();
+            case 2: return invoiceframe.sdf.format(inv.getDate());
+            case 3: return inv.getTotal();
+        }
+        return "";
+        //return "(" + rowIndex + ", " + columnIndex + ")";
     }
-
-
-
-       
-
-  
-
-   
+    
 }

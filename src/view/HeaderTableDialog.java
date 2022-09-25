@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package View;
 
 import java.awt.GridLayout;
 import javax.swing.JButton;
@@ -13,50 +13,48 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author ahmed
+ * @author DELL
  */
 public class HeaderTableDialog extends JDialog {
     private JTextField custNameField;
-    private JTextField DateField;
+    private JTextField invDateField;
     private JLabel custNameLbl;
-    private JLabel DateLbl;
-    private JButton OKBtn;
+    private JLabel invDateLbl;
+    private JButton okBtn;
     private JButton cancelBtn;
 
     public HeaderTableDialog(invoiceframe frame) {
-        custNameLbl = new JLabel("Customer Name ");
-        custNameField = new JTextField(30);
-        DateLbl = new JLabel(" Date ");
-        DateField = new JTextField(30);
-        OKBtn = new JButton("OK");
+        custNameLbl = new JLabel("Customer Name:");
+        custNameField = new JTextField(20);
+        invDateLbl = new JLabel("Invoice Date:");
+        invDateField = new JTextField(20);
+        okBtn = new JButton("OK");
         cancelBtn = new JButton("Cancel");
         
-        OKBtn.setActionCommand("newInvoiceOK");
+        okBtn.setActionCommand("newInvoiceOK");
         cancelBtn.setActionCommand("newInvoiceCancel");
         
-        OKBtn.addActionListener(frame.getController());
+        okBtn.addActionListener(frame.getController());
         cancelBtn.addActionListener(frame.getController());
-        setLayout(new GridLayout(4, 3));
+        setLayout(new GridLayout(4, 2));
         
-        add(DateLbl);
-        add(DateField);
+        add(invDateLbl);
+        add(invDateField);
         add(custNameLbl);
         add(custNameField);
-        add(OKBtn);
+        add(okBtn);
         add(cancelBtn);
-        
+        setModal(true);
         pack();
         
     }
-
 
     public JTextField getCustNameField() {
         return custNameField;
     }
 
     public JTextField getInvDateField() {
-        return DateField;
+        return invDateField;
     }
-    
     
 }

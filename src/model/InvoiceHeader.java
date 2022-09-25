@@ -3,72 +3,47 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package Model;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.ArrayList;
+import View.invoiceframe;
 
 /**
  *
- * @author ahmed
+ * @author DELL
  */
 public class InvoiceHeader {
     private int num;
-    private  Date date;
-    private String customername;
-    private ArrayList <InvoiceLine> Line; //to make the super class knowing the subclass
-private DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    private String customer;
+    private Date date;
+    private ArrayList<InvoiceLine> Line;
 
- public InvoiceHeader(int num, String name, Date date) {
-       
-    }
-    public InvoiceHeader(int num, Date date, String customername) {
+    public InvoiceHeader(int num, String customer, Date date) {
         this.num = num;
+        this.customer = customer;
         this.date = date;
-        this.customername = customername;
     }
 
-   
-
-    public double getTotal(){
-    double total=0.0;
-    for(int i=0 ; i<getLine().size();i++){
-    InvoiceLine Line=getLine().get(i);
-     total+=Line.getTotal();
-    }
-    /* for(InvoiceLine line:Line){
-    total+=line.getTotal();
-    }*/
-    return total;        
-    }
-    public ArrayList<InvoiceLine> getLine() {
-        if (Line == null) {
-            Line = new ArrayList<>();
-        }
-        return Line;
-    }
-
-    public ArrayList<InvoiceLine> setLine() {
-        this.Line= Line;
-        return Line;
+    
+    public String toCSV() {
+        return num + "," + invoiceframe.sdf.format(date) + "," + customer;
     }
     
-    public String getCustomername() {
-        return customername;
-    }
-
-    public void setCustomername(String customername) {
-        this.customername = customername;
-    }
-
     public int getnum() {
         return num;
     }
 
     public void setnum(int num) {
         this.num = num;
+    }
+
+    public String getCustomername() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
     }
 
     public Date getDate() {
@@ -78,15 +53,32 @@ private DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     public void setDate(Date date) {
         this.date = date;
     }
-    public void addInvLine(InvoiceLine Line){
-    getLine().add(Line);
+
+    public ArrayList<InvoiceLine> getLine() {
+        if (Line == null) {
+            Line = new ArrayList<>();
+        }
+        return Line;
+    }
+
+    public void setLine(ArrayList<InvoiceLine> Line) {
+        this.Line = Line;
     }
     
+    public double getTotal() {
+        double total = 0.0;
+        for (InvoiceLine line : getLine()) {
+            total += line.getTotal();
+        }
+        return total;
+    }
 
     @Override
     public String toString() {
-        return "Header{" + "invoiceno=" + num + ", date=" + date + ", customername=" + customername + '}';
+        return "Invoice{" + "num=" + num + ", customer=" + customer + ", date=" + date + '}';
     }
+
+    
     
     
 }
