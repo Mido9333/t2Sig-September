@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View;
+package view;
 
 import java.awt.GridLayout;
 import javax.swing.JButton;
@@ -34,9 +34,9 @@ public class HeaderTableDialog extends JDialog {
         okBtn.setActionCommand("newInvoiceOK");
         cancelBtn.setActionCommand("newInvoiceCancel");
         
-        okBtn.addActionListener(frame.getController());
-        cancelBtn.addActionListener(frame.getController());
-        setLayout(new GridLayout(4, 2));
+        okBtn.addActionListener(frame.getListener());
+        cancelBtn.addActionListener(frame.getListener());
+        setLayout(new GridLayout(3, 2));
         
         add(invDateLbl);
         add(invDateField);

@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package model;
 
 import java.util.Date;
 import java.util.ArrayList;
-import View.invoiceframe;
+import view.invoiceframe;
 
 /**
  *
@@ -17,28 +17,27 @@ public class InvoiceHeader {
     private int num;
     private String customer;
     private Date date;
-    private ArrayList<InvoiceLine> Line;
+    private ArrayList<InvoiceLine> lines;
 
     public InvoiceHeader(int num, String customer, Date date) {
         this.num = num;
         this.customer = customer;
         this.date = date;
     }
-
     
     public String toCSV() {
         return num + "," + invoiceframe.sdf.format(date) + "," + customer;
     }
     
-    public int getnum() {
+    public int getNum() {
         return num;
     }
 
-    public void setnum(int num) {
+    public void setNum(int num) {
         this.num = num;
     }
 
-    public String getCustomername() {
+    public String getCustomer() {
         return customer;
     }
 
@@ -54,20 +53,20 @@ public class InvoiceHeader {
         this.date = date;
     }
 
-    public ArrayList<InvoiceLine> getLine() {
-        if (Line == null) {
-            Line = new ArrayList<>();
+    public ArrayList<InvoiceLine> getLines() {
+        if (lines == null) {
+            lines = new ArrayList<>();
         }
-        return Line;
+        return lines;
     }
 
-    public void setLine(ArrayList<InvoiceLine> Line) {
-        this.Line = Line;
+    public void setLines(ArrayList<InvoiceLine> lines) {
+        this.lines = lines;
     }
     
     public double getTotal() {
         double total = 0.0;
-        for (InvoiceLine line : getLine()) {
+        for (InvoiceLine line : getLines()) {
             total += line.getTotal();
         }
         return total;
@@ -77,7 +76,6 @@ public class InvoiceHeader {
     public String toString() {
         return "Invoice{" + "num=" + num + ", customer=" + customer + ", date=" + date + '}';
     }
-
     
     
     

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package model;
 
 /**
  *
@@ -13,17 +13,17 @@ public class InvoiceLine {
     private String item;
     private double price;
     private int count;
-    private InvoiceHeader Inv;
+    private InvoiceHeader invoice;
 
-    public InvoiceLine(String item, double price, int count, InvoiceHeader Inv) {
+    public InvoiceLine(String item, double price, int count, InvoiceHeader invoice) {
         this.item = item;
         this.price = price;
         this.count = count;
-        this.Inv = Inv;
+        this.invoice = invoice;
     }
 
     public String toCSV() {
-        return Inv.getnum() + "," + item + "," + price + "," + count;
+        return invoice.getNum() + "," + item + "," + price + "," + count;
     }
     
     public String getItem() {
@@ -50,16 +50,16 @@ public class InvoiceLine {
         this.count = count;
     }
 
-    public InvoiceHeader getInv() {
-        return Inv;
+    public InvoiceHeader getInvoice() {
+        return invoice;
     }
 
-    public void setInvoice(InvoiceHeader Header) {
-        this.Inv = Header;
+    public void setInvoice(InvoiceHeader invoice) {
+        this.invoice = invoice;
     }
     
     public double getTotal() {
-        return count * price;
+        return getCount() * getPrice();
     }
 
     @Override

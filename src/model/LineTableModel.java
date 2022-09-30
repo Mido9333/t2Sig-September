@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package model;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -14,35 +14,35 @@ import javax.swing.table.AbstractTableModel;
  */
 public class LineTableModel extends AbstractTableModel {
 
-    private String[] columns = {"Item", "Price", "Count", "Total"};
-    private List<InvoiceLine> Line;
+    private String[] cols = {"Item", "Unit Price", "Count", "Total"};
+    private List<InvoiceLine> lines;
 
-    public LineTableModel(List<InvoiceLine> Line) {
-        this.Line = Line;
+    public LineTableModel(List<InvoiceLine> lines) {
+        this.lines = lines;
     }
 
-    public List<InvoiceLine> getLine() {
-        return Line;
+    public List<InvoiceLine> getLines() {
+        return lines;
     }
     
     @Override
     public int getRowCount() {
-        return Line.size();
+        return lines.size();
     }
 
     @Override
     public int getColumnCount() {
-        return columns.length;
+        return cols.length;
     }
 
     @Override
     public String getColumnName(int column) {
-        return columns[column];
+        return cols[column];
     }
     
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        InvoiceLine line = Line.get(rowIndex);
+        InvoiceLine line = lines.get(rowIndex);
         
         switch (columnIndex) {
             case 0: return line.getItem();

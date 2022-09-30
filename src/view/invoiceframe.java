@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View;
+package view;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import Controller.Controller;
-import Model.HeaderTableModel;
-import Model.InvoiceHeader;
+import controller.Controller;
+import model.HeaderTableModel;
+import model.InvoiceHeader;
 
 /**
  *
@@ -36,8 +36,8 @@ public class invoiceframe extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        headerTable = new javax.swing.JTable();
-        headerTable.getSelectionModel().addListSelectionListener(controller);
+        invoicesTable = new javax.swing.JTable();
+        invoicesTable.getSelectionModel().addListSelectionListener(listener);
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -47,36 +47,33 @@ public class invoiceframe extends javax.swing.JFrame {
         invDateLabel = new javax.swing.JLabel();
         invTotalLabel = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        lineTable = new javax.swing.JTable();
-        createinvbtn = new javax.swing.JButton();
-        createinvbtn.addActionListener(controller);
+        linesTable = new javax.swing.JTable();
+        newInvButton = new javax.swing.JButton();
+        newInvButton.addActionListener(listener);
         delInvButton = new javax.swing.JButton();
-        delInvButton.addActionListener(controller);
-        createitembtn = new javax.swing.JButton();
-        createitembtn.addActionListener(controller);
-        deleteitembtn = new javax.swing.JButton();
-        deleteitembtn.addActionListener(controller);
+        delInvButton.addActionListener(listener);
+        newLineButton = new javax.swing.JButton();
+        newLineButton.addActionListener(listener);
+        delLineButton = new javax.swing.JButton();
+        delLineButton.addActionListener(listener);
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         loadMenuItem = new javax.swing.JMenuItem();
-        loadMenuItem.addActionListener(controller);
+        loadMenuItem.addActionListener(listener);
         saveMenuItem = new javax.swing.JMenuItem();
-        saveMenuItem.addActionListener(controller);
+        saveMenuItem.addActionListener(listener);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        headerTable.setModel(new javax.swing.table.DefaultTableModel(
+        invoicesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jScrollPane1.setViewportView(headerTable);
+        jScrollPane1.setViewportView(invoicesTable);
 
         jLabel1.setText("Invoice Num");
 
@@ -94,34 +91,30 @@ public class invoiceframe extends javax.swing.JFrame {
 
         invTotalLabel.setText("jLabel8");
 
-        lineTable.setModel(new javax.swing.table.DefaultTableModel(
+        linesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jScrollPane2.setViewportView(lineTable);
+        jScrollPane2.setViewportView(linesTable);
 
-        createinvbtn.setText("create new invoice");
+        newInvButton.setText("New Invoice");
 
-        delInvButton.setText("delete invoice");
+        delInvButton.setText("Delete Invoice");
 
-        createitembtn.setText("create new items");
+        newLineButton.setText("New Line");
 
-        deleteitembtn.setText("delete item");
-        deleteitembtn.setToolTipText("");
+        delLineButton.setText("Delete Line");
 
         jMenu3.setText("File");
 
-        loadMenuItem.setText("Load ");
+        loadMenuItem.setText("Load Files");
         jMenu3.add(loadMenuItem);
 
-        saveMenuItem.setText("Save");
+        saveMenuItem.setText("Save Data");
         jMenu3.add(saveMenuItem);
 
         jMenuBar2.add(jMenu3);
@@ -154,13 +147,13 @@ public class invoiceframe extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(62, 62, 62)
-                .addComponent(createinvbtn)
+                .addComponent(newInvButton)
                 .addGap(39, 39, 39)
                 .addComponent(delInvButton)
                 .addGap(100, 100, 100)
-                .addComponent(createitembtn)
+                .addComponent(newLineButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(deleteitembtn)
+                .addComponent(delLineButton)
                 .addGap(55, 55, 55))
         );
         layout.setVerticalGroup(
@@ -189,10 +182,10 @@ public class invoiceframe extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(createinvbtn)
+                    .addComponent(newInvButton)
                     .addComponent(delInvButton)
-                    .addComponent(createitembtn)
-                    .addComponent(deleteitembtn))
+                    .addComponent(newLineButton)
+                    .addComponent(delLineButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -226,6 +219,8 @@ public class invoiceframe extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         
         /* Create and display the form */
@@ -233,22 +228,19 @@ public class invoiceframe extends javax.swing.JFrame {
             public void run() {
                 invoiceframe frame = new invoiceframe();
                 frame.setVisible(true);
-                //the paret that neede to read csv when the application first run
-                frame.controller.Load("InvoiceHeader.csv", "InvoiceLine.csv");
+                frame.listener.loadFiles("InvoiceHeader.csv", "InvoiceLine.csv");
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton createinvbtn;
-    private javax.swing.JButton createitembtn;
     private javax.swing.JLabel custNameLabel;
     private javax.swing.JButton delInvButton;
-    private javax.swing.JButton deleteitembtn;
-    private javax.swing.JTable headerTable;
+    private javax.swing.JButton delLineButton;
     private javax.swing.JLabel invDateLabel;
     private javax.swing.JLabel invNumLabel;
     private javax.swing.JLabel invTotalLabel;
+    private javax.swing.JTable invoicesTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -257,11 +249,13 @@ public class invoiceframe extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable lineTable;
+    private javax.swing.JTable linesTable;
     private javax.swing.JMenuItem loadMenuItem;
+    private javax.swing.JButton newInvButton;
+    private javax.swing.JButton newLineButton;
     private javax.swing.JMenuItem saveMenuItem;
     // End of variables declaration//GEN-END:variables
-    private Controller controller = new Controller(this);
+    private Controller listener = new Controller(this);
     public static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     private ArrayList<InvoiceHeader> invoices;
     private HeaderTableModel headerTableModel;
@@ -285,12 +279,12 @@ public class invoiceframe extends javax.swing.JFrame {
         this.headerTableModel = headerTableModel;
     }
 
-    public JTable getHeaderTable() {
-        return headerTable;
+    public JTable getInvoicesTable() {
+        return invoicesTable;
     }
 
     public JTable getLinesTable() {
-        return lineTable;
+        return linesTable;
     }
 
     public JLabel getCustNameLabel() {
@@ -309,8 +303,8 @@ public class invoiceframe extends javax.swing.JFrame {
         return invTotalLabel;
     }
 
-    public Controller getController() {
-        return controller;
+    public Controller getListener() {
+        return listener;
     }
     
     

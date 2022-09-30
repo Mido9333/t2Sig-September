@@ -11,18 +11,18 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="loadMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Load "/>
+                <Property name="text" type="java.lang.String" value="Load Files"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="loadMenuItem.addActionListener(controller);&#xd;&#xa;"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="loadMenuItem.addActionListener(listener);&#xd;&#xa;"/>
               </AuxValues>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="saveMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Save"/>
+                <Property name="text" type="java.lang.String" value="Save Data"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="saveMenuItem.addActionListener(controller);&#xd;&#xa;"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="saveMenuItem.addActionListener(listener);&#xd;&#xa;"/>
               </AuxValues>
             </MenuItem>
           </SubComponents>
@@ -80,13 +80,13 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
-              <Component id="createinvbtn" min="-2" max="-2" attributes="0"/>
+              <Component id="newInvButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
               <Component id="delInvButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
-              <Component id="createitembtn" min="-2" max="-2" attributes="0"/>
+              <Component id="newLineButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="deleteitembtn" min="-2" max="-2" attributes="0"/>
+              <Component id="delLineButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -123,10 +123,10 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="createinvbtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="newInvButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="delInvButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="createitembtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="deleteitembtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="newLineButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="delLineButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -141,46 +141,14 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="headerTable">
+        <Component class="javax.swing.JTable" name="invoicesTable">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="4">
-                <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                <Column editable="true" title="Title 4" type="java.lang.Object"/>
-              </Table>
-            </Property>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-              <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-              </TableColumnModel>
-            </Property>
-            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+              <Table columnCount="0" rowCount="0"/>
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="headerTable.getSelectionModel().addListSelectionListener(controller);&#xd;&#xa;"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="invoicesTable.getSelectionModel().addListSelectionListener(listener);&#xd;&#xa;"/>
           </AuxValues>
         </Component>
       </SubComponents>
@@ -232,78 +200,45 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="lineTable">
+        <Component class="javax.swing.JTable" name="linesTable">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="4">
-                <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                <Column editable="true" title="Title 4" type="java.lang.Object"/>
-              </Table>
-            </Property>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-              <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-              </TableColumnModel>
-            </Property>
-            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+              <Table columnCount="0" rowCount="0"/>
             </Property>
           </Properties>
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="createinvbtn">
+    <Component class="javax.swing.JButton" name="newInvButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="create new invoice"/>
+        <Property name="text" type="java.lang.String" value="New Invoice"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="createinvbtn.addActionListener(controller);&#xd;&#xa;"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="newInvButton.addActionListener(listener);&#xd;&#xa;"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="delInvButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="delete invoice"/>
+        <Property name="text" type="java.lang.String" value="Delete Invoice"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="delInvButton.addActionListener(controller);&#xd;&#xa;"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="delInvButton.addActionListener(listener);&#xd;&#xa;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="createitembtn">
+    <Component class="javax.swing.JButton" name="newLineButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="create new items"/>
+        <Property name="text" type="java.lang.String" value="New Line"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="createitembtn.addActionListener(controller);"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="newLineButton.addActionListener(listener);"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="deleteitembtn">
+    <Component class="javax.swing.JButton" name="delLineButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="delete item"/>
-        <Property name="toolTipText" type="java.lang.String" value=""/>
+        <Property name="text" type="java.lang.String" value="Delete Line"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="deleteitembtn.addActionListener(controller);&#xd;&#xa;"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="delLineButton.addActionListener(listener);&#xd;&#xa;"/>
       </AuxValues>
     </Component>
   </SubComponents>

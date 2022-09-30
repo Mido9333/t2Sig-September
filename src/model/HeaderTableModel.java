@@ -3,46 +3,46 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package model;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import View.invoiceframe;
+import view.invoiceframe;
 
 /**
  *
  * @author DELL
  */
 public class HeaderTableModel extends AbstractTableModel {
-    private String[] columns = {"Num", "Customername", 
+    private String[] cols = {"Num", "Customer", 
         "Date", "Total"};
-    private List<InvoiceHeader> Header;
+    private List<InvoiceHeader> invoices;
     
-    public HeaderTableModel(List<InvoiceHeader> Header) {
-        this.Header = Header;
+    public HeaderTableModel(List<InvoiceHeader> invoices) {
+        this.invoices = invoices;
     }
     
     @Override
     public int getRowCount() {
-        return Header.size();
+        return invoices.size();
     }
 
     @Override
     public int getColumnCount() {
-        return columns.length;
+        return cols.length;
     }
 
     @Override
     public String getColumnName(int columnIndex) {
-        return columns[columnIndex];
+        return cols[columnIndex];
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        InvoiceHeader inv = Header.get(rowIndex);
+        InvoiceHeader inv = invoices.get(rowIndex);
         switch (columnIndex) {
-            case 0: return inv.getnum();
-            case 1: return inv.getCustomername();
+            case 0: return inv.getNum();
+            case 1: return inv.getCustomer();
             case 2: return invoiceframe.sdf.format(inv.getDate());
             case 3: return inv.getTotal();
         }
